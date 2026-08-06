@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="A plain-English field guide to digital privacy, account security, fraud response, safer browsing, and privacy tools — with honest limits.">
+  <meta name="author" content="Anthony “Kwame” Durham — ½ Man ½ Amazing">
+  <meta name="theme-color" content="#0b0b0c">
+  <title>The Knucklehead Privacy Playbook · ½ Man ½ Amazing</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,900&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --void:#0b0b0c;
+      --void-2:#131316;
+      --void-3:#191a1d;
+      --line:#2b2a26;
+      --line-2:#3a382f;
+      --bone:#f1ebdb;
+      --bone-2:#d7d0be;
+      --dim:#98917f;
+      --brass:#c49a48;
+      --brass-2:#e3bd66;
+      --brass-deep:#8a6c2d;
+      --oxblood:#c26a63;
+      --oxblood-bg:#241413;
+      --verdigris:#8fae82;
+      --verdigris-bg:#151d17;
+      --caution-bg:#211a0e;
+      --shadow:0 24px 60px rgba(0,0,0,.5);
+      --maxw:1120px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;background:var(--void);color:var(--bone);
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+      line-height:1.65;-webkit-font-smoothing:antialiased;
+      background-image:radial-gradient(1200px 600px at 88% -6%,rgba(196,154,72,.10),transparent 60%);
+      background-attachment:fixed;
+    }
+    a{color:var(--brass-2);text-decoration:none;text-underline-offset:3px}
+    a:hover{text-decoration:underline}
+    button,input{font:inherit}
+    .wrap{width:min(var(--maxw),calc(100% - 40px));margin:auto}
+
+    /* ---- utility labels ---- */
+    .eyebrow{
+      font-family:"Space Mono",ui-monospace,monospace;color:var(--brass);
+      text-transform:uppercase;letter-spacing:.24em;font-size:.72rem;font-weight:700;
+    }
+    .kicker{
+      font-family:"Space Mono",monospace;color:var(--bone-2);opacity:.75;
+      text-transform:uppercase;letter-spacing:.22em;font-size:.72rem;
+    }
+
+    /* ---- top bar ---- */
+    .top{
+      position:sticky;top:0;z-index:20;background:rgba(11,11,12,.82);
+      backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+    }
+    .top .wrap{display:flex;align-items:center;gap:22px;min-height:66px}
+    .brand{
+      font-family:"Space Mono",monospace;font-weight:700;letter-spacing:.06em;
+      font-size:.98rem;color:var(--bone);white-space:nowrap;
+    }
+    .brand .half{color:var(--brass)}
+    nav{margin-left:auto;display:flex;gap:26px}
+    nav a{color:var(--bone-2);font-size:.86rem;font-family:"Space Mono",monospace;letter-spacing:.03em}
+    nav a:hover{color:var(--brass-2);text-decoration:none}
+    .menu{display:none;margin-left:auto;background:transparent;border:1px solid var(--line-2);border-radius:8px;color:var(--bone);padding:8px 12px;font-family:"Space Mono",monospace;font-size:.8rem;cursor:pointer}
+
+    /* ---- hero ---- */
+    .hero{padding:96px 0 78px;border-bottom:1px solid var(--line)}
+    .hero .rule{width:64px;height:2px;background:var(--brass);margin:22px 0 26px}
+    .hero h1{
+      font-family:Fraunces,serif;font-weight:900;font-optical-sizing:auto;
+      font-size:clamp(2.9rem,7.4vw,6.1rem);line-height:.94;letter-spacing:-.015em;
+      margin:.12em 0 .28em;max-width:14ch;color:var(--bone);
+    }
+    .hero h1 em{font-style:italic;color:var(--brass-2);font-weight:500}
+    .hero .lede{font-size:clamp(1.06rem,1.7vw,1.3rem);max-width:60ch;color:var(--bone-2)}
+    .actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+    .btn{
+      display:inline-block;border-radius:2px;padding:14px 22px;font-weight:700;cursor:pointer;
+      font-family:"Space Mono",monospace;font-size:.82rem;letter-spacing:.04em;text-transform:uppercase;
+      background:var(--brass);color:#160f02;border:1px solid var(--brass);
+    }
+    .btn:hover{background:var(--brass-2);text-decoration:none}
+    .btn.ghost{background:transparent;color:var(--bone);border:1px solid var(--line-2)}
+    .btn.ghost:hover{border-color:var(--brass);color:var(--brass-2)}
+
+    /* ---- sections ---- */
+    section{padding:76px 0;border-bottom:1px solid var(--line)}
+    .section-head{max-width:64ch;margin-bottom:34px}
+    .section-head h2{
+      font-family:Fraunces,serif;font-weight:600;font-size:clamp(2rem,4vw,3.1rem);
+      line-height:1.06;letter-spacing:-.01em;margin:.28em 0 .35em;color:var(--bone);
+    }
+    .section-head p{color:var(--dim);font-size:1.04rem}
+
+    .notice{
+      border:1px solid var(--line-2);border-left:3px solid var(--brass);
+      background:linear-gradient(180deg,rgba(196,154,72,.06),transparent);
+      padding:20px 22px;border-radius:3px;margin:26px 0;color:var(--bone-2);
+    }
+    .notice strong{color:var(--brass-2)}
+
+    /* ---- card grid ---- */
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{
+      background:var(--void-2);border:1px solid var(--line);border-radius:6px;padding:24px;
+      transition:transform .25s ease,border-color .25s ease;
+    }
+    .card:hover{transform:translateY(-3px);border-color:var(--line-2)}
+    .card h3{font-family:Fraunces,serif;font-weight:600;font-size:1.28rem;line-height:1.2;margin:.5rem 0 .5rem;color:var(--bone)}
+    .card p{color:var(--dim);margin:.4rem 0}
+    .card .num{font-family:"Space Mono",monospace;color:var(--brass);font-size:.78rem;letter-spacing:.1em}
+
+    .tag{
+      display:inline-block;border-radius:2px;padding:5px 11px;font-size:.68rem;font-weight:700;
+      font-family:"Space Mono",monospace;text-transform:uppercase;letter-spacing:.1em;border:1px solid;
+    }
+    .t-safe{background:var(--verdigris-bg);color:var(--verdigris);border-color:#2f4432}
+    .t-caution{background:var(--caution-bg);color:var(--brass-2);border-color:var(--brass-deep)}
+    .t-alert{background:var(--oxblood-bg);color:var(--oxblood);border-color:#5a2e2b}
+
+    /* ---- situation cards ---- */
+    .search{
+      width:100%;padding:16px 18px;border:1px solid var(--line-2);border-radius:3px;
+      background:var(--void-2);color:var(--bone);margin:6px 0 26px;
+      font-family:"Space Mono",monospace;font-size:.92rem;
+    }
+    .search::placeholder{color:var(--dim)}
+    .search:focus{outline:none;border-color:var(--brass)}
+    .situations{display:grid;gap:12px}
+    .situations details{background:var(--void-2);border:1px solid var(--line);border-radius:6px;padding:0 22px}
+    .situations details[open]{border-color:var(--line-2)}
+    .situations summary{
+      cursor:pointer;font-weight:600;padding:20px 0;list-style:none;
+      display:flex;align-items:center;gap:14px;color:var(--bone);
+    }
+    .situations summary::-webkit-details-marker{display:none}
+    .situations summary::after{content:"+";margin-left:auto;color:var(--brass);font-family:"Space Mono",monospace;font-size:1.1rem}
+    .situations details[open] summary::after{content:"–"}
+    .inside{border-top:1px solid var(--line);padding:16px 0 24px;color:var(--bone-2)}
+    .inside h4{font-family:"Space Mono",monospace;text-transform:uppercase;letter-spacing:.14em;font-size:.72rem;color:var(--brass);margin:0 0 6px}
+    .inside ol,.inside ul{margin:6px 0;padding-left:20px}
+    .inside li{margin:6px 0}
+    .inside li::marker{color:var(--brass)}
+    .inside p{color:var(--dim)}
+    .inside strong{color:var(--bone)}
+
+    /* ---- browser rooms ---- */
+    .rooms{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .room{
+      background:var(--void-2);border:1px solid var(--line);border-top:3px solid var(--brass);
+      border-radius:6px;padding:24px;
+    }
+    .room h3{font-family:Fraunces,serif;font-weight:600;font-size:1.3rem;margin:.2rem 0 .5rem;color:var(--bone)}
+    .room p{color:var(--dim);margin:0}
+
+    /* ---- tools ---- */
+    .tool .icon{font-size:1.7rem;line-height:1}
+    .limit{font-size:.9rem;border-top:1px solid var(--line);padding-top:12px;margin-top:14px;color:var(--dim)}
+    .limit strong{color:var(--oxblood)}
+
+    /* ---- checklist ---- */
+    .checklist{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .check{
+      display:flex;gap:14px;background:var(--void-2);border:1px solid var(--line);
+      border-radius:4px;padding:16px;align-items:flex-start;transition:background .2s,border-color .2s;
+    }
+    .check input{width:20px;height:20px;accent-color:var(--brass);flex:none;margin-top:2px}
+    .check span{color:var(--bone-2);font-size:.96rem}
+    .check:has(input:checked){background:var(--verdigris-bg);border-color:#33472f}
+    .check:has(input:checked) span{color:var(--verdigris)}
+    .reset{margin-top:20px}
+
+    /* ---- resources ---- */
+    .sources{columns:2;column-gap:40px;padding-left:18px;margin:0}
+    .sources li{margin-bottom:12px;break-inside:avoid;color:var(--bone-2)}
+    .sources li::marker{color:var(--brass)}
+    .fine{color:var(--dim);font-size:.9rem;margin-top:22px}
+
+    /* ---- footer / signature ---- */
+    footer{background:var(--void);padding:74px 0 62px;border-top:1px solid var(--line);text-align:center;
+      background-image:radial-gradient(700px 320px at 50% 120%,rgba(196,154,72,.10),transparent 70%)}
+    footer .signoff{max-width:52ch;margin:0 auto 8px;color:var(--bone-2)}
+
+    /* ornamental divider: brass hairlines flanking a diamond */
+    .ornament{display:flex;align-items:center;justify-content:center;gap:16px;margin:30px auto 26px;max-width:340px}
+    .ornament .bar{height:1px;flex:1;background:linear-gradient(90deg,transparent,var(--brass))}
+    .ornament .bar.r{background:linear-gradient(90deg,var(--brass),transparent)}
+    .ornament .gem{width:7px;height:7px;background:var(--brass-2);transform:rotate(45deg);box-shadow:0 0 12px rgba(227,189,102,.6)}
+    .ornament .dot{width:3px;height:3px;border-radius:50%;background:var(--brass)}
+
+    .signed{font-family:"Space Mono",monospace;color:var(--dim);text-transform:uppercase;letter-spacing:.28em;font-size:.66rem;margin-bottom:6px}
+    .sig{
+      font-family:"Great Vibes",cursive;color:var(--brass-2);
+      font-size:clamp(3.4rem,8.5vw,6rem);line-height:.95;margin:.04em 0 .1em;
+      transform:rotate(-3deg);display:inline-block;
+      text-shadow:0 1px 0 rgba(0,0,0,.4),0 0 26px rgba(227,189,102,.28);
+    }
+    .sig .qk{font-size:.82em;color:var(--brass)}
+    .sig-swash{width:min(360px,64vw);height:26px;margin:2px auto 0;display:block}
+    .sig-swash path{fill:none;stroke:var(--brass);stroke-width:1.6;opacity:.9}
+    .sig-line{font-family:"Space Mono",monospace;color:var(--bone-2);text-transform:uppercase;letter-spacing:.24em;font-size:.74rem;margin-top:18px}
+    footer .falcons{color:var(--dim);font-size:.92rem;margin-top:22px}
+
+    :focus-visible{outline:2px solid var(--brass-2);outline-offset:3px;border-radius:2px}
+
+    /* ---- reveal ---- */
+    .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+    .reveal.in{opacity:1;transform:none}
+
+    @media(max-width:820px){
+      nav{display:none;position:absolute;top:66px;left:0;right:0;background:var(--void-2);
+           border-bottom:1px solid var(--line);padding:18px 24px;flex-direction:column;gap:18px}
+      nav.open{display:flex}
+      .menu{display:block}
+      .grid,.rooms{grid-template-columns:1fr}
+      .checklist{grid-template-columns:1fr}
+      .sources{columns:1}
+      .hero{padding:64px 0 56px}
+    }
+    @media(prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      .reveal{opacity:1;transform:none;transition:none}
+      .card{transition:none}
+    }
+    @media print{
+      body{background:#fff;color:#111;background-image:none}
+      .top,.actions,.search,.reset,.menu,nav{display:none!important}
+      section,.hero{padding:20px 0;border-color:#ddd}
+      .card,.room,.notice,.check,.situations details{box-shadow:none;break-inside:avoid;background:#fff;border-color:#ccc;color:#111}
+      .hero h1,.section-head h2,.card h3,.room h3{color:#111}
+      .sig{color:#7a5a17;transform:none;text-shadow:none}
+      .sig-swash path{stroke:#7a5a17}
+      .ornament .gem,.ornament .dot{box-shadow:none}
+      a{color:#111}
+    }
+  </style>
+</head>
+<body>
+  <header class="top"><div class="wrap">
+    <div class="brand"><span class="half">½</span> MAN <span class="half">½</span> AMAZING</div>
+    <button class="menu" aria-expanded="false" aria-controls="nav">Menu</button>
+    <nav id="nav">
+      <a href="#emergency">Something happened</a>
+      <a href="#browser">Browser setup</a>
+      <a href="#tools">Toolbox</a>
+      <a href="#checklist">Checklist</a>
+    </nav>
+  </div></header>
+
+  <main>
+    <section class="hero"><div class="wrap">
+      <div class="eyebrow">Plain English · Real steps · No panic</div>
+      <div class="rule"></div>
+      <h1>The Knucklehead <em>Privacy</em> Playbook</h1>
+      <p class="lede">A beginner-friendly field guide for protecting your accounts, money, devices, and personal information — and knowing exactly what to do when something suspicious happens. Written for my knucklehead Falcon-fan friends, because even Falcons fans deserve a better defense.</p>
+      <div class="actions">
+        <a class="btn" href="#emergency">I need help now</a>
+        <a class="btn ghost" href="#checklist">Protect myself today</a>
+      </div>
+    </div></section>
+
+    <section id="start"><div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Start here</div>
+        <h2>Security is layers, not magic.</h2>
+        <p>No app makes you impossible to hack or track. The goal is to reduce your exposure, block common attacks, notice trouble quickly, and recover safely.</p>
+      </div>
+      <div class="notice reveal"><strong>The five-part beginner stack:</strong> password manager + passkeys or security keys + separate browser profiles + financial alerts and credit freezes + breach/account monitoring.</div>
+      <div class="grid">
+        <article class="card reveal"><span class="tag t-safe">Prevent</span><h3>Make attacks harder</h3><p>Use unique passwords, phishing-resistant sign-in, updates, careful app permissions, and private recovery information.</p></article>
+        <article class="card reveal"><span class="tag t-caution">Detect</span><h3>Notice problems early</h3><p>Turn on login, bank, card, credit, and breach alerts. Review account devices and recovery settings regularly.</p></article>
+        <article class="card reveal"><span class="tag t-alert">Recover</span><h3>Know what to do</h3><p>Use official apps or typed addresses — not links in alarming messages — and preserve evidence before deleting anything.</p></article>
+      </div>
+    </div></section>
+
+    <section id="emergency"><div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Situation cards</div>
+        <h2>Something happened. What do I do?</h2>
+        <p>Search for the situation, open the card, and follow it in order.</p>
+      </div>
+      <input class="search" id="search" type="search" placeholder="Search: password reset, card charge, lost phone…" aria-label="Search situation cards">
+      <div class="situations" id="situations">
+        <details data-keywords="password reset email account"><summary><span class="tag t-caution">Verify</span> I received a password-reset email I didn't request</summary><div class="inside"><p><strong>What it means:</strong> Someone may have entered your email into a reset form. This alone does not prove they accessed your account.</p><h4>Do now</h4><ol><li>Do not click the email link or share its code.</li><li>Open the official app or type the service address yourself.</li><li>Review recent logins, devices, recovery email/phone, forwarding rules, and connected apps.</li><li>If the password is reused, change it everywhere it was reused — starting with your email.</li><li>Enable a passkey or MFA and save recovery codes.</li></ol></div></details>
+        <details data-keywords="phishing link qr text call entered password"><summary><span class="tag t-alert">Act now</span> I clicked a suspicious link or entered information</summary><div class="inside"><ol><li>Stop interacting; do not download or install anything else.</li><li>From a trusted device, change the affected password and any reused password.</li><li>Sign out other sessions; remove unknown devices, MFA methods, and connected apps.</li><li>Call the card issuer using the number on the card if payment data was entered.</li><li>Save screenshots, sender details, URL, and time. Report the message.</li><li>If software or a device-management profile was installed, disconnect the device and get qualified help.</li></ol></div></details>
+        <details data-keywords="card fraud unfamiliar charge replacement apple wallet"><summary><span class="tag t-alert">Act now</span> My card has an unfamiliar charge</summary><div class="inside"><ol><li>Lock the card in the official banking app and call the issuer.</li><li>Ask whether the charge used the physical card, chip, online number, recurring token, or mobile wallet.</li><li>Dispute the transaction and ask the issuer to revoke merchant/account-updater tokens if fraud followed a replacement.</li><li>Change the retailer password if that account may be involved; review orders, addresses, and devices.</li><li>Turn on alerts for every transaction.</li></ol><p>A fraudulent card charge does not automatically mean your phone was hacked.</p></div></details>
+        <details data-keywords="suspicious login account hacked takeover"><summary><span class="tag t-alert">Act now</span> I see an unknown login or device</summary><div class="inside"><ol><li>Take screenshots and note the time/location shown.</li><li>Change the password from a trusted device.</li><li>Sign out all other sessions and remove unknown devices.</li><li>Check recovery contacts, MFA methods, email rules, delegates, and connected apps.</li><li>Secure your primary email first if multiple accounts are affected.</li></ol></div></details>
+        <details data-keywords="lost stolen phone iphone android"><summary><span class="tag t-alert">Act now</span> My phone is lost or stolen</summary><div class="inside"><ol><li>Use Apple Find My or Google Find Hub from another device; mark it lost.</li><li>Contact your carrier to suspend the line and protect against SIM transfer.</li><li>Do not confront anyone at a mapped location; contact police when appropriate.</li><li>Remove cards from the wallet remotely if recovery is unlikely.</li><li>Erase remotely only when necessary; erasing may stop location tracking.</li><li>Change high-risk passwords if the phone was unlocked or its passcode was exposed.</li></ol></div></details>
+        <details data-keywords="breach leaked pwned identity theft social security"><summary><span class="tag t-caution">Protect</span> My information appeared in a breach</summary><div class="inside"><ol><li>Confirm the breach through the company or a trusted breach-notification service.</li><li>Change exposed and reused passwords; do not panic-change unique passwords without reason.</li><li>Freeze credit at Equifax, Experian, and TransUnion if identity data is exposed.</li><li>Use an IRS Identity Protection PIN when appropriate.</li><li>Watch for targeted phishing that quotes real leaked information.</li></ol></div></details>
+        <details data-keywords="impersonation fake profile harassment"><summary><span class="tag t-caution">Document</span> Someone is impersonating or harassing me online</summary><div class="inside"><ol><li>Capture the profile URL, username, posts, messages, dates, and screenshots before reporting.</li><li>Report impersonation through the platform's official form.</li><li>Warn close contacts through a known channel; do not publicly argue with the impersonator.</li><li>Tighten discoverability, tag review, audience, contact syncing, and location settings.</li><li>Escalate credible threats to law enforcement and preserve all evidence.</li></ol></div></details>
+        <details data-keywords="tracking price airline travel shopping surveillance pricing"><summary><span class="tag t-safe">Reduce</span> I want to shop or book travel more privately</summary><div class="inside"><ol><li>Use a dedicated Shopping/Travel browser profile.</li><li>Research while logged out; reject optional cookies and precise location.</li><li>Compare the identical itinerary directly, through a metasearch service, and in a clean private window.</li><li>Record total price, rules, fees, and time — not just the advertised number.</li><li>Log in near checkout only if rewards are needed, then compare again.</li></ol><p>Price changes can still reflect inventory and demand. Incognito or a VPN cannot guarantee a lower price.</p></div></details>
+      </div>
+    </div></section>
+
+    <section id="browser"><div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Browser privacy</div>
+        <h2>Use separate rooms for different parts of your life.</h2>
+        <p>A browser profile separates cookies, history, extensions, and logins. A private window is temporary, but websites, your network, and signed-in accounts may still recognize you.</p>
+      </div>
+      <div class="rooms">
+        <article class="room reveal"><h3>Personal</h3><p>Email, social media, streaming, and everyday accounts. Keep casual activity here.</p></article>
+        <article class="room reveal"><h3>Shopping &amp; Travel</h3><p>Research products, airfare, hotels, and major purchases while initially logged out.</p></article>
+        <article class="room reveal"><h3>Financial</h3><p>Banking, cards, taxes, and investments only. Install no unnecessary extensions and do no casual browsing.</p></article>
+      </div>
+      <div class="notice reveal"><strong>Easy:</strong> built-in tracking protection + reject optional cookies. &nbsp;<strong>Better:</strong> use the three profiles above. &nbsp;<strong>Stronger:</strong> review extensions, permissions, DNS filtering, account logins, and saved data.</div>
+    </div></section>
+
+    <section id="tools"><div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Privacy &amp; security toolbox</div>
+        <h2>Cool tools — with honest limits.</h2>
+        <p>Use tools because they solve a particular problem, not because they promise invisibility.</p>
+      </div>
+      <div class="grid">
+        <article class="card tool reveal"><div class="icon">🔑</div><h3>Password manager</h3><p>Creates and stores a different strong password for every account. Built-in breach alerts help find exposed or reused credentials.</p><p class="limit"><strong>Limit:</strong> It cannot protect you if you approve a fake login or leave the vault unlocked.</p></article>
+        <article class="card tool reveal"><div class="icon">🛡️</div><h3>Passkeys &amp; YubiKeys</h3><p>Passkeys resist phishing. A YubiKey is a physical security key and is excellent for primary email, password manager, and critical accounts.</p><p class="limit"><strong>Limit:</strong> Keep two keys or another recovery method; a key does not protect an already-unlocked session.</p></article>
+        <article class="card tool reveal"><div class="icon">💳</div><h3>Privacy.com virtual cards</h3><p>Creates merchant-locked or limited card numbers to reduce damage if a retailer is compromised.</p><p class="limit"><strong>Limit:</strong> It does not hide purchases from the provider, prevent all billing disputes, or replace bank alerts.</p></article>
+        <article class="card tool reveal"><div class="icon">🧅</div><h3>Tor Browser</h3><p>Routes traffic through the Tor network and separates it from normal browsing. Useful when stronger browsing privacy is genuinely needed.</p><p class="limit"><strong>Limit:</strong> It can be slower. Logging into a personal account reveals who you are; Tor does not make unsafe downloads safe.</p></article>
+        <article class="card tool reveal"><div class="icon">🌐</div><h3>NextDNS or filtered DNS</h3><p>Blocks many known tracking, malware, and advertising domains across configured devices, with adjustable logs and rules.</p><p class="limit"><strong>Limit:</strong> DNS filtering cannot inspect everything inside allowed services or replace device security.</p></article>
+        <article class="card tool reveal"><div class="icon">📣</div><h3>Have I Been Pwned</h3><p>Notifies you when an email address appears in a known breach. Pair it with alerts from your password manager.</p><p class="limit"><strong>Limit:</strong> No database contains every breach, and a listed email does not prove account takeover.</p></article>
+        <article class="card tool reveal"><div class="icon">💰</div><h3>Bank, card &amp; credit alerts</h3><p>Turn on alerts for every transaction, new payee, password change, credit inquiry, and new account.</p><p class="limit"><strong>Limit:</strong> Monitoring tells you after activity occurs; credit freezes help prevent new-account fraud.</p></article>
+        <article class="card tool reveal"><div class="icon">📱</div><h3>Account security dashboards</h3><p>Apple, Google, Microsoft, Meta, Amazon, and banks show devices, sessions, recovery options, and connected apps.</p><p class="limit"><strong>Limit:</strong> Location estimates can be wrong. Investigate the device, time, and activity together.</p></article>
+        <article class="card tool reveal"><div class="icon">🔒</div><h3>VPN</h3><p>Encrypts traffic between your device and VPN provider and changes the IP address websites see.</p><p class="limit"><strong>Limit:</strong> It does not hide you from accounts you log into, stop cookies/fingerprinting, or make you anonymous.</p></article>
+      </div>
+    </div></section>
+
+    <section id="more"><div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">The rest of the privacy map</div>
+        <h2>What the guide protects against</h2>
+      </div>
+      <div class="grid">
+        <article class="card reveal"><h3>Accounts &amp; email</h3><p>Recovery settings, unique passwords, passkeys, MFA, backup codes, unknown sessions, forwarding rules, and connected apps.</p></article>
+        <article class="card reveal"><h3>Mobile &amp; social</h3><p>App permissions, ad identifiers, contact syncing, discoverability, audience controls, tags, location, and impersonation.</p></article>
+        <article class="card reveal"><h3>Identity &amp; money</h3><p>Credit freezes, transaction alerts, tax identity protection, virtual cards, breach response, and scam resistance.</p></article>
+        <article class="card reveal"><h3>Data brokers</h3><p>Find and remove sensitive listings, reduce public records exposure where lawful, and repeat checks because data can return.</p></article>
+        <article class="card reveal"><h3>Home &amp; devices</h3><p>Updates, router administration, unique Wi-Fi credentials, guest/IoT networks, camera access, and smart-device account security.</p></article>
+        <article class="card reveal"><h3>Commercial surveillance</h3><p>Cookies, fingerprints, identity matching, AI profiling, dark patterns, targeted offers, and possible surveillance pricing.</p></article>
+      </div>
+    </div></section>
+
+    <section id="checklist"><div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Do this first</div>
+        <h2>Your protection checklist</h2>
+        <p>Progress stays in this browser on this device. The page does not collect it.</p>
+      </div>
+      <div class="checklist" id="checks">
+        <label class="check"><input type="checkbox"><span>Secure primary email with a unique password and passkey or security key.</span></label>
+        <label class="check"><input type="checkbox"><span>Use a password manager and replace reused passwords.</span></label>
+        <label class="check"><input type="checkbox"><span>Save recovery codes somewhere protected and offline.</span></label>
+        <label class="check"><input type="checkbox"><span>Review recovery email, phone, devices, sessions, and connected apps.</span></label>
+        <label class="check"><input type="checkbox"><span>Turn on alerts for every bank and credit-card transaction.</span></label>
+        <label class="check"><input type="checkbox"><span>Freeze credit separately at all three credit bureaus.</span></label>
+        <label class="check"><input type="checkbox"><span>Update phones, computers, browsers, routers, and smart devices.</span></label>
+        <label class="check"><input type="checkbox"><span>Use a strong device passcode and enable Find My/Find Hub.</span></label>
+        <label class="check"><input type="checkbox"><span>Review camera, microphone, contacts, photos, Bluetooth, and location permissions.</span></label>
+        <label class="check"><input type="checkbox"><span>Create Personal, Shopping/Travel, and Financial browser profiles.</span></label>
+        <label class="check"><input type="checkbox"><span>Disable social-media contact syncing and unwanted discoverability.</span></label>
+        <label class="check"><input type="checkbox"><span>Subscribe to breach alerts and review password-manager warnings.</span></label>
+        <label class="check"><input type="checkbox"><span>Separate smart-home/IoT devices from sensitive devices when practical.</span></label>
+        <label class="check"><input type="checkbox"><span>Start a data-broker and people-search removal routine.</span></label>
+      </div>
+      <button class="btn ghost reset" id="reset" type="button">Reset checklist</button>
+    </div></section>
+
+    <section id="resources"><div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Trusted resources</div>
+        <h2>Go directly to official help.</h2>
+      </div>
+      <ul class="sources">
+        <li><a href="https://www.identitytheft.gov/" rel="noopener">IdentityTheft.gov recovery plan</a></li>
+        <li><a href="https://consumer.ftc.gov/scams" rel="noopener">FTC scam guidance</a></li>
+        <li><a href="https://www.annualcreditreport.com/" rel="noopener">AnnualCreditReport.com</a></li>
+        <li><a href="https://www.equifax.com/personal/credit-report-services/credit-freeze/" rel="noopener">Equifax credit freeze</a></li>
+        <li><a href="https://www.experian.com/freeze/center.html" rel="noopener">Experian credit freeze</a></li>
+        <li><a href="https://www.transunion.com/credit-freeze" rel="noopener">TransUnion credit freeze</a></li>
+        <li><a href="https://haveibeenpwned.com/NotifyMe" rel="noopener">Have I Been Pwned notifications</a></li>
+        <li><a href="https://support.apple.com/en-us/102560" rel="noopener">Apple Safety Check</a></li>
+        <li><a href="https://myaccount.google.com/security-checkup" rel="noopener">Google Security Checkup</a></li>
+        <li><a href="https://www.cisa.gov/secure-our-world" rel="noopener">CISA Secure Our World</a></li>
+      </ul>
+      <p class="fine">Always verify addresses yourself. This educational guide is not legal, financial, or incident-forensics advice.</p>
+    </div></section>
+  </main>
+
+  <footer><div class="wrap">
+    <div class="kicker">Made with love and mild judgment</div>
+    <p class="signoff">Stay dangerous out there — the good kind. Layer your defenses, trust your alerts, and never click the panic link.</p>
+
+    <div class="ornament" aria-hidden="true">
+      <span class="bar"></span><span class="dot"></span><span class="gem"></span><span class="dot"></span><span class="bar r"></span>
+    </div>
+
+    <div class="signed">Signed,</div>
+    <div class="sig">Anthony <span class="qk">“Kwame”</span> Durham</div>
+    <svg class="sig-swash" viewBox="0 0 360 26" aria-hidden="true" preserveAspectRatio="none">
+      <path d="M4 16 C 60 2, 120 2, 180 13 S 300 26, 356 8" stroke-linecap="round"/>
+    </svg>
+    <div class="sig-line"><span style="color:var(--brass)">½</span> Man <span style="color:var(--brass)">½</span> Amazing</div>
+    <p class="falcons">Because even Falcons fans deserve a better defense. 🏈</p>
+  </div></footer>
+
+  <script>
+    // mobile nav
+    const menu=document.querySelector('.menu'),nav=document.querySelector('nav');
+    menu.addEventListener('click',()=>{const o=nav.classList.toggle('open');menu.setAttribute('aria-expanded',o)});
+    nav.addEventListener('click',()=>{nav.classList.remove('open');menu.setAttribute('aria-expanded','false')});
+
+    // situation search
+    document.querySelector('#search').addEventListener('input',e=>{
+      const q=e.target.value.toLowerCase().trim();
+      document.querySelectorAll('#situations details').forEach(d=>{
+        d.hidden=q&&!((d.textContent+' '+d.dataset.keywords).toLowerCase().includes(q));
+      });
+    });
+
+    // checklist persistence
+    const boxes=[...document.querySelectorAll('#checks input')];
+    boxes.forEach((b,i)=>{
+      b.checked=localStorage.getItem('privacy-check-'+i)==='1';
+      b.addEventListener('change',()=>localStorage.setItem('privacy-check-'+i,b.checked?'1':'0'));
+    });
+    document.querySelector('#reset').addEventListener('click',()=>{
+      boxes.forEach((b,i)=>{b.checked=false;localStorage.removeItem('privacy-check-'+i)});
+    });
+
+    // scroll reveal
+    if(!window.matchMedia('(prefers-reduced-motion:reduce)').matches){
+      const io=new IntersectionObserver((entries)=>{
+        entries.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}});
+      },{threshold:.12});
+      document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%3*60)+'ms';io.observe(el)});
+    }else{
+      document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
+    }
+  </script>
+</body>
+</html>
